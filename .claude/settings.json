@@ -1,28 +1,42 @@
 {
-  "model": "opus",
   "permissions": {
     "allow": [
       "Read",
+      "Write",
+      "Edit",
       "Glob",
       "Grep",
       "WebSearch",
-      "WebFetch"
+      "WebFetch",
+      "Bash(git remote *)",
+      "Bash(git log *)",
+      "Bash(mkdir *)",
+      "Bash(cp *)",
+      "Bash(ls *)"
     ],
     "defaultMode": "default"
   },
-  "enabledPlugins": {
-    "claude-mem@thedotmack": false
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "afplay /System/Library/Sounds/Morse.aiff" }
+        ]
+      }
+    ]
   },
   "statusLine": {
     "type": "command",
     "command": "npx -y ccstatusline@latest",
     "padding": 0
   },
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [{ "type": "command", "command": "afplay /System/Library/Sounds/Morse.aiff" }]
-      }
-    ]
+  "enabledPlugins": {
+    "claude-mem@thedotmack": false,
+    "swift-lsp@claude-plugins-official": true
+  },
+  "effortLevel": "high",
+  "voiceEnabled": true,
+  "env": {
+    "CLAUDE_CODE_NO_FLICKER": "1"
   }
 }
