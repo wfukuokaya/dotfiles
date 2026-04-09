@@ -1,5 +1,5 @@
 #!/bin/bash
-# setup.sh — Deploy Claude Code config from this dotfiles repo to ~/.claude/
+# setup.sh — Deploy Claude Code and Positron config from this dotfiles repo
 #
 # Usage:
 #   git clone https://github.com/wfukuokaya/dotfiles.git
@@ -40,6 +40,20 @@ for f in "$SRC/commands/"*.md; do
     cp "$f" "$DST/commands/$name"
     echo "Copied: commands/$name"
 done
+
+# --- Positron settings.json ---
+POSITRON_DST="$HOME/Library/Application Support/Positron/User"
+POSITRON_SRC="$SCRIPT_DIR/positron/settings.json"
+if [ -f "$POSITRON_SRC" ]; then
+    mkdir -p "$POSITRON_DST"
+    if [ -f "$POSITRON_DST/settings.json" ]; then
+        BACKUP="$POSITRON_DST/settings.json.bak.$(date +%Y%m%d%H%M%S)"
+        echo "Backup: $POSITRON_DST/settings.json -> $BACKUP"
+        cp "$POSITRON_DST/settings.json" "$BACKUP"
+    fi
+    cp "$POSITRON_SRC" "$POSITRON_DST/settings.json"
+    echo "Copied: positron/settings.json"
+fi
 
 # --- Google Drive knowledge-base directories (macOS only) ---
 GDRIVE_CANDIDATES=(
