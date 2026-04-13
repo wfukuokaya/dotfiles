@@ -45,6 +45,7 @@ Clinical researcher, urologist, and medical oncologist (Tokyo Jikei University /
 - Use "patients" by default unless I specify otherwise.
 - Forbidden words in final prose: "employ", "utilize", "significant", "link", "de-identified".
 - Use "show" for data results; reserve "demonstrate" for conceptual statements only.
+- Do not repeat exact numbers already shown in figures or tables; summarize trends descriptively and direct readers to the figure/table.
 - When output needs to be copied (e.g., prose, templates), provide it in a code block rather than inline formatted text.
 
 ## Statistical Phrasing
@@ -95,8 +96,8 @@ When counting words in manuscript sections, include subheader text (e.g., `### B
 
 ## Japanese Writing
 
-- Avoid the "〜こと、〜いたします／存じます" construction. Drop こと and connect the noun phrase directly to the evaluative expression (e.g., prefer "LINEでのご連絡、大変失礼いたします" over "LINEでのご連絡となりましたこと、大変失礼いたします").
-- Do not use excessive honorifics. Prefer concise polite forms over stacked constructions (e.g., avoid ～でございます, お～申し上げる in routine emails; use ～です／～します instead).
+- Avoid the "~こと、~いたします／存じます" construction. Drop こと and connect the noun phrase directly to the evaluative expression (e.g., prefer "LINEでのご連絡、大変失礼いたします" over "LINEでのご連絡となりましたこと、大変失礼いたします").
+- Do not use excessive honorifics. Prefer concise polite forms over stacked constructions (e.g., avoid ~でございます, お~申し上げる in routine emails; use ~です／~します instead).
 - Do not overuse the prefixes お／ご. Attach them only when referring to the recipient's actions or possessions, or when directing an action toward them.
 - Avoid archaic or overly formal expressions such as 貴殿, 謹呈, 薄謝, 参上, 御高覧.
 - Do not apply 謙譲語 to the recipient's actions (e.g., avoid お申し込みになられますと; use お申し込みになりますと).

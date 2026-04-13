@@ -1,6 +1,6 @@
 Save a search-optimized summary of this session to TWO locations:
 1. **Project-local**: `claude_sessions/` in the current project directory
-2. **Google Drive KB**: `/Users/fukuokaya/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/claude/knowledge-base/sessions/{project}/`
+2. **Google Drive**: `/Users/fukuokaya/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/project/claude_session/{YYYY-MM-DD}/`
 
 ---
 
@@ -8,18 +8,20 @@ Save a search-optimized summary of this session to TWO locations:
 
 - **Project name**: Run `git remote get-url origin 2>/dev/null | sed 's|.*/||;s|\.git$||'`. If no git remote, use the current directory basename. If the working directory is `$HOME`, use `_no-project`.
 - **Date**: Today's date (YYYY-MM-DD).
-- **Session number**: Check BOTH output directories for existing files matching `{date}_s*` and use the next available number N.
+- **Session number**: Check the Google Drive date folder (`My Drive/project/claude_session/{YYYY-MM-DD}/`) for existing files matching `session_*`, and the project-local `claude_sessions/` for `{date}_s*` files. Use the next available number N across both so the two copies stay in sync.
 - **Slug**: Generate a 3-5 word kebab-case slug summarizing the session's main topic.
 - **Latest commit**: Run `git log -1 --format='%H' 2>/dev/null` (use `none` if not a git repo or no commits this session).
 
 ## Step 2: Create directories if needed
 
 - `mkdir -p claude_sessions/` in the project directory (skip if working_dir is $HOME).
-- `mkdir -p` the Google Drive `sessions/{project}/` path.
+- `mkdir -p "/Users/fukuokaya/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/project/claude_session/{YYYY-MM-DD}/"`.
 
 ## Step 3: Write the session file
 
-Use filename format: `{YYYY-MM-DD}_s{N}_{slug}.md`
+Filenames:
+- **Google Drive**: `session_{N}_{slug}.md` (the date is already in the parent folder).
+- **Project-local**: `{YYYY-MM-DD}_s{N}_{slug}.md` (flat folder, so the date goes in the filename).
 
 Use this structure exactly:
 
@@ -91,76 +93,5 @@ Include both abbreviations and full terms (e.g., both `HTE` and `treatment-effec
 
 ## Step 5: Save to both locations
 
-1. Write the file to `claude_sessions/{date}_s{N}_{slug}.md` in the project directory (skip if working_dir is $HOME).
-2. Write an IDENTICAL copy to: `/Users/fukuokaya/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/claude/knowledge-base/sessions/{project}/{date}_s{N}_{slug}.md`
-
-## Step 6: Update INDEX.md
-
-Open `/Users/fukuokaya/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/claude/knowledge-base/INDEX.md`.
-
-If the file does not exist, create it with this header:
-
-```markdown
-# Knowledge Base Index
-
-Last updated: YYYY-MM-DD
-
-## Sessions
-
-| Date | S# | Project | Type | Session | Key Tags |
-|------|-----|---------|------|---------|----------|
-```
-
-Append one row to the Sessions table:
-
-```
-| {date} | {N} | {project} | {type} | [{slug}](sessions/{project}/{date}_s{N}_{slug}.md) | {top 5 tags, comma-separated} |
-```
-
-Update the "Last updated" date at the top. Do NOT rewrite existing rows.
-
-## Step 7: Extract nuggets
-
-For EACH nugget in the "Knowledge nuggets" section, save a standalone file:
-
-- Path: `/Users/fukuokaya/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/claude/knowledge-base/nuggets/{category}/{nugget-slug}.md`
-- Format:
-
-```markdown
----
-title: {nugget title}
-category: {category}
-tags: [...]
-source_session: sessions/{project}/{date}_s{N}_{slug}.md
-date_discovered: YYYY-MM-DD
----
-
-# {nugget title}
-
-{insight text}
-
-## Example
-
-{code or reference, if any}
-
-## Context
-
-Discovered in [{session slug}](../../sessions/{project}/{date}_s{N}_{slug}.md).
-```
-
-If a nugget file with the same slug already exists, append a `## See also` link to the existing file rather than overwriting.
-
-After saving nuggets, append rows to the INDEX.md Nuggets table. If the Nuggets table does not exist yet, create it:
-
-```markdown
-## Nuggets
-
-| Category | Nugget | Source Session | Tags |
-|----------|--------|----------------|------|
-```
-
-Then append:
-
-```
-| {category} | [{nugget-title}](nuggets/{category}/{nugget-slug}.md) | {project}/{date}_s{N} | {nugget tags, comma-separated} |
-```
+1. Write the file to `claude_sessions/{YYYY-MM-DD}_s{N}_{slug}.md` in the project directory (skip if working_dir is $HOME).
+2. Write an IDENTICAL copy to: `/Users/fukuokaya/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/project/claude_session/{YYYY-MM-DD}/session_{N}_{slug}.md`

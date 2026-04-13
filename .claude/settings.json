@@ -1,18 +1,78 @@
 {
+  "env": {
+    "CLAUDE_CODE_NO_FLICKER": "1",
+    "CLAUDE_CODE_EFFORT_LEVEL": "max"
+  },
   "permissions": {
     "allow": [
       "Read",
-      "Write",
-      "Edit",
       "Glob",
       "Grep",
       "WebSearch",
       "WebFetch",
+      "WebFetch(domain:github.com)",
+      "Bash(git:*)",
       "Bash(git remote *)",
       "Bash(git log *)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(git fetch:*)",
+      "Bash(git checkout:*)",
+      "Bash(ls *)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
       "Bash(mkdir *)",
       "Bash(cp *)",
-      "Bash(ls *)"
+      "Bash(cp:*)",
+      "Bash(python3:*)",
+      "Bash(quarto render:*)",
+      "Bash(Rscript:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(grep:*)",
+      "Bash(awk:*)",
+      "Bash(printf:*)",
+      "Bash(open:*)",
+      "Bash(gh repo:*)",
+      "Bash(gh api:*)",
+      "Bash(gh auth:*)",
+      "Bash(gh gist:*)",
+      "Bash(gh search:*)",
+      "Bash(brew install:*)",
+      "Bash(brew list:*)",
+      "Bash(npm install:*)",
+      "Bash(npm list:*)",
+      "Bash(npm info:*)",
+      "Bash(npm update:*)",
+      "Bash(npx:*)",
+      "Bash(pip3 install:*)",
+      "Bash(pip3 show:*)",
+      "Bash(pip3 list:*)",
+      "Bash(uv tool:*)",
+      "Bash(curl:*)",
+      "Bash(env)",
+      "Bash(claude mcp:*)",
+      "Bash(claude --version)",
+      "Bash(R:*)",
+      "Bash(afplay:*)",
+      "Skill(proofreader)",
+      "Skill(update-config)",
+      "mcp__zotero__zotero_semantic_search",
+      "mcp__zotero__zotero_search_items",
+      "mcp__zotero__zotero_get_item_metadata",
+      "mcp__zotero__zotero_get_item_fulltext",
+      "mcp__zotero__zotero_get_item_children",
+      "mcp__zotero__zotero_get_annotations",
+      "mcp__pubmed__search_pubmed",
+      "mcp__pubmed__fetch_summary",
+      "mcp__pubmed__get_fulltext",
+      "mcp__claude_ai_PubMed__search_articles",
+      "mcp__claude_ai_PubMed__get_full_text_article",
+      "mcp__claude_ai_PubMed__get_article_metadata",
+      "mcp__claude_ai_PubMed__convert_article_ids",
+      "mcp__claude_ai_Consensus__search",
+      "mcp__claude_ai_Clinical_Trials__get_trial_details"
     ],
     "defaultMode": "default"
   },
@@ -20,7 +80,10 @@
     "Stop": [
       {
         "hooks": [
-          { "type": "command", "command": "afplay /System/Library/Sounds/Morse.aiff" }
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Morse.aiff"
+          }
         ]
       }
     ]
@@ -34,9 +97,6 @@
     "claude-mem@thedotmack": false,
     "swift-lsp@claude-plugins-official": true
   },
-  "effortLevel": "high",
   "voiceEnabled": true,
-  "env": {
-    "CLAUDE_CODE_NO_FLICKER": "1"
-  }
+  "showThinkingSummaries": true
 }

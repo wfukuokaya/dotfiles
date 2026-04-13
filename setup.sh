@@ -41,37 +41,68 @@ for f in "$SRC/commands/"*.md; do
     echo "Copied: commands/$name"
 done
 
+# --- skills/ ---
+if [ -d "$SRC/skills" ]; then
+    mkdir -p "$DST/skills"
+    cp -R "$SRC/skills/"* "$DST/skills/" 2>/dev/null || true
+    echo "Copied: skills/"
+fi
+
+# --- .mcp.json ---
+if [ -f "$SRC/.mcp.json.example" ] && [ ! -f "$DST/.mcp.json" ]; then
+    cp "$SRC/.mcp.json.example" "$DST/.mcp.json"
+    echo "Created: .mcp.json from template (edit API keys before use)"
+elif [ -f "$SRC/.mcp.json.example" ]; then
+    echo "Skipped: .mcp.json already exists (see .mcp.json.example for reference)"
+fi
+
 # --- Positron settings.json ---
 POSITRON_DST="$HOME/Library/Application Support/Positron/User"
-POSITRON_SRC="$SCRIPT_DIR/positron/settings.json"
-if [ -f "$POSITRON_SRC" ]; then
+POSITRON_SRC="$SCRIPT_DIR/positron"
+if [ -f "$POSITRON_SRC/settings.json" ]; then
     mkdir -p "$POSITRON_DST"
     if [ -f "$POSITRON_DST/settings.json" ]; then
         BACKUP="$POSITRON_DST/settings.json.bak.$(date +%Y%m%d%H%M%S)"
         echo "Backup: $POSITRON_DST/settings.json -> $BACKUP"
         cp "$POSITRON_DST/settings.json" "$BACKUP"
     fi
-    cp "$POSITRON_SRC" "$POSITRON_DST/settings.json"
+    cp "$POSITRON_SRC/settings.json" "$POSITRON_DST/settings.json"
     echo "Copied: positron/settings.json"
 fi
 
-# --- Google Drive knowledge-base directories (macOS only) ---
+# --- Positron keybindings.json ---
+if [ -f "$POSITRON_SRC/keybindings.json" ]; then
+    mkdir -p "$POSITRON_DST"
+    if [ -f "$POSITRON_DST/keybindings.json" ]; then
+        BACKUP="$POSITRON_DST/keybindings.json.bak.$(date +%Y%m%d%H%M%S)"
+        echo "Backup: $POSITRON_DST/keybindings.json -> $BACKUP"
+        cp "$POSITRON_DST/keybindings.json" "$BACKUP"
+    fi
+    cp "$POSITRON_SRC/keybindings.json" "$POSITRON_DST/keybindings.json"
+    echo "Copied: positron/keybindings.json"
+fi
+
+# --- Fukuokaya Sage theme ---
+THEME_DST="$HOME/.positron/extensions/fukuokaya-theme"
+if [ ! -d "$THEME_DST" ]; then
+    echo ""
+    echo "Install Fukuokaya Sage theme:"
+    echo "  git clone https://github.com/wfukuokaya/fukuokaya-theme.git $THEME_DST"
+else
+    echo "Theme: fukuokaya-theme already installed"
+fi
+
+# --- Google Drive session directories (macOS only) ---
 GDRIVE_CANDIDATES=(
-    "$HOME/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/claude/knowledge-base"
-    "$HOME/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/マイドライブ/claude/knowledge-base"
+    "$HOME/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/project/claude_session"
+    "$HOME/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/マイドライブ/project/claude_session"
 )
 
 for candidate in "${GDRIVE_CANDIDATES[@]}"; do
     parent="$(dirname "$candidate")"
     if [ -d "$parent" ]; then
-        mkdir -p "$candidate/sessions" \
-                 "$candidate/nuggets/r-patterns" \
-                 "$candidate/nuggets/methods" \
-                 "$candidate/nuggets/statistics" \
-                 "$candidate/nuggets/tooling" \
-                 "$candidate/nuggets/data-management" \
-                 "$candidate/topics"
-        echo "Created: Google Drive knowledge-base directories at $candidate"
+        mkdir -p "$candidate"
+        echo "Created: Google Drive session directory at $candidate"
         break
     fi
 done
@@ -84,5 +115,14 @@ for f in "$DST/commands/"*.md; do
     [ -f "$f" ] || continue
     echo "  /$(basename "$f" .md)"
 done
+echo "Skills:"
+for f in "$DST/skills/"*.md "$DST/skills/"*/SKILL.md; do
+    [ -f "$f" ] || continue
+    name="$(basename "$(dirname "$f")")"
+    [ "$name" = "skills" ] && name="$(basename "$f" .md)"
+    echo "  /$name"
+done
 echo ""
+echo "Note: Edit ~/.claude/.mcp.json to add your API keys."
+echo "Note: Install UDEV Gothic 35NFLG font for Positron."
 echo "Run 'claude' in Positron terminal to start."
