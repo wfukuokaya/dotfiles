@@ -82,6 +82,25 @@ if [ -f "$POSITRON_SRC/keybindings.json" ]; then
     echo "Copied: positron/keybindings.json"
 fi
 
+# --- Positron extensions ---
+POSITRON_CLI="$(command -v positron || true)"
+if [ -z "$POSITRON_CLI" ] && [ -x "/Applications/Positron.app/Contents/Resources/app/bin/positron" ]; then
+    POSITRON_CLI="/Applications/Positron.app/Contents/Resources/app/bin/positron"
+fi
+if [ -n "$POSITRON_CLI" ] && [ -f "$POSITRON_SRC/extensions.txt" ]; then
+    echo ""
+    echo "Installing Positron extensions from extensions.txt..."
+    while IFS= read -r ext || [ -n "$ext" ]; do
+        [ -z "$ext" ] && continue
+        [[ "$ext" =~ ^# ]] && continue
+        "$POSITRON_CLI" --install-extension "$ext" --force >/dev/null 2>&1 \
+            && echo "  installed: $ext" \
+            || echo "  failed:    $ext (install manually if needed)"
+    done < "$POSITRON_SRC/extensions.txt"
+else
+    echo "Skipped extensions: positron CLI not found or extensions.txt missing"
+fi
+
 # --- Fukuokaya Sage theme ---
 THEME_DST="$HOME/.positron/extensions/fukuokaya-theme"
 if [ ! -d "$THEME_DST" ]; then
