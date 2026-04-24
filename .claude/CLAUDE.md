@@ -94,10 +94,29 @@ When counting words in manuscript sections, include subheader text (e.g., `### B
 - Commit messages: concise English, imperative mood
 - Do not push unless I explicitly ask
 
+## Positron Configuration
+
+Settings file: `~/Library/Application Support/Positron/User/settings.json` (active). Cross-machine backup: `~/My Drive/config/positron-settings/settings.json` — always keep both in sync when modifying.
+
+### Workbench border colors (current layout)
+
+The terminal is in the **auxiliary bar** (right secondary sidebar), not the main panel. Confirmed via workspace state: `workbench.auxiliarybar.activepanelid=terminal`, `workbench.panel.hidden=true`.
+
+Border color mapping for this layout:
+
+- **Editor ↔ right-side terminal (auxiliary bar) border**: `sideBar.border`
+  - NOT `panel.border` (the panel is hidden).
+  - NOT `auxiliaryBar.border` (this key is NOT registered in Positron, unlike VS Code).
+  - Confirmed in `/Applications/Positron.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js` at `AuxiliaryBarPart.updateStyles()`: `borderLeftColor = this.getColor(SIDE_BAR_BORDER)`.
+- **Editor ↔ bottom/right panel** (if the panel is shown): `panel.border`.
+- **Editor group splits**: `editorGroup.border`.
+
+When asked about vertical borders between editor and terminal, go straight to `sideBar.border`. Current value: `#3a3d4a` (subtle grey against `#1a1c23` background).
+
 ## Japanese Writing
 
-- Avoid the "~こと、~いたします／存じます" construction. Drop こと and connect the noun phrase directly to the evaluative expression (e.g., prefer "LINEでのご連絡、大変失礼いたします" over "LINEでのご連絡となりましたこと、大変失礼いたします").
-- Do not use excessive honorifics. Prefer concise polite forms over stacked constructions (e.g., avoid ~でございます, お~申し上げる in routine emails; use ~です／~します instead).
+- Avoid the "〜こと、〜いたします／存じます" construction. Drop こと and connect the noun phrase directly to the evaluative expression (e.g., prefer "LINEでのご連絡、大変失礼いたします" over "LINEでのご連絡となりましたこと、大変失礼いたします").
+- Do not use excessive honorifics. Prefer concise polite forms over stacked constructions (e.g., avoid ～でございます, お～申し上げる in routine emails; use ～です／～します instead).
 - Do not overuse the prefixes お／ご. Attach them only when referring to the recipient's actions or possessions, or when directing an action toward them.
 - Avoid archaic or overly formal expressions such as 貴殿, 謹呈, 薄謝, 参上, 御高覧.
 - Do not apply 謙譲語 to the recipient's actions (e.g., avoid お申し込みになられますと; use お申し込みになりますと).

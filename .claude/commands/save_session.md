@@ -8,9 +8,9 @@ Save a search-optimized summary of this session to TWO locations:
 
 - **Project name**: Run `git remote get-url origin 2>/dev/null | sed 's|.*/||;s|\.git$||'`. If no git remote, use the current directory basename. If the working directory is `$HOME`, use `_no-project`.
 - **Date**: Today's date (YYYY-MM-DD).
-- **Session number**: Check the Google Drive date folder (`My Drive/project/claude_session/{YYYY-MM-DD}/`) for existing files matching `session_*`, and the project-local `claude_sessions/` for `{date}_s*` files. Use the next available number N across both so the two copies stay in sync.
+- **Session number**: Let `n_drive` = highest existing `session_<k>_*` in the Drive date folder (0 if none); let `n_local` = highest existing `{date}_s<k>_*` in project-local `claude_sessions/` (0 if none). Set `N = max(n_drive, n_local) + 1`. This keeps both copies in sync even if one location was out of sync.
 - **Slug**: Generate a 3-5 word kebab-case slug summarizing the session's main topic.
-- **Latest commit**: Run `git log -1 --format='%H' 2>/dev/null` (use `none` if not a git repo or no commits this session).
+- **Latest commit**: Run `git log -1 --format='%H' 2>/dev/null`. Use `none` if the working directory is not a git repo or `git log` returns no commits.
 
 ## Step 2: Create directories if needed
 
@@ -23,6 +23,8 @@ Filenames:
 - **Google Drive**: `session_{N}_{slug}.md` (the date is already in the parent folder).
 - **Project-local**: `{YYYY-MM-DD}_s{N}_{slug}.md` (flat folder, so the date goes in the filename).
 
+**YAML quoting**: In the frontmatter, any string containing spaces, colons, commas, brackets, or other YAML-special characters MUST be double-quoted. In particular, `files_touched` and `working_dir` frequently contain spaces (e.g. `"My Drive"` paths). Example: `files_touched: ["260422_foo.R", "path with space/bar.qmd"]`. Plain alphanumeric tokens (tags like `HTE`, `mice`) need no quoting.
+
 Use this structure exactly:
 
 ```
@@ -30,7 +32,7 @@ Use this structure exactly:
 date: YYYY-MM-DD
 session: N
 slug: {slug}
-type: coding | analysis | literature-review | manuscript | debugging | design
+type: {one of: coding, analysis, literature-review, manuscript, debugging, design}
 project: {project-name}
 working_dir: {absolute path}
 commit: {hash or "none"}
@@ -47,7 +49,7 @@ One sentence: what was the objective of this session?
 ## What was done
 ### 1. {Brief title}
 **Context**: Why was this needed?
-**Action**: What was done? (Include key code changes in blockquotes)
+**Action**: What was done? (Include key code changes in fenced code blocks with a language tag, e.g. ```r)
 **Result**: What was the outcome?
 **References**: @citekeys or filenames (if applicable)
 
@@ -65,7 +67,7 @@ One sentence: what was the objective of this session?
 Reusable learnings from this session. Each nugget is a self-contained insight useful in other projects or contexts. Include at least one nugget per session. If nothing was novel, write a brief nugget about the approach or pattern used.
 
 ### Nugget: {concise title}
-- **Category**: r-patterns | methods | statistics | tooling | data-management
+- **Category**: {one of: r-patterns, methods, statistics, tooling, data-management}
 - **Tags**: [specific searchable terms]
 - **Insight**: 2-4 sentences explaining the reusable knowledge
 - **Example**: (optional code snippet or reference)
@@ -81,7 +83,9 @@ Reusable learnings from this session. Each nugget is a self-contained insight us
 
 ## Step 4: Tags
 
-Tags MUST include ALL of the following categories (aim for 30-60 terms):
+Tags MUST cover ALL six categories below. Target 30–80 terms total; the category-coverage constraint is authoritative — if covering all six pushes the count above 80, keep all six and accept the count.
+
+Categories:
 - Topic keywords (disease, drug names, clinical context)
 - Statistical methods (model names, test names, estimation approaches)
 - R packages and key functions used
@@ -93,5 +97,5 @@ Include both abbreviations and full terms (e.g., both `HTE` and `treatment-effec
 
 ## Step 5: Save to both locations
 
-1. Write the file to `claude_sessions/{YYYY-MM-DD}_s{N}_{slug}.md` in the project directory (skip if working_dir is $HOME).
-2. Write an IDENTICAL copy to: `/Users/fukuokaya/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/project/claude_session/{YYYY-MM-DD}/session_{N}_{slug}.md`
+1. Write the file to `claude_sessions/{YYYY-MM-DD}_s{N}_{slug}.md` in the project directory. **Skip this step if `working_dir` is `$HOME`** — in that case only the Drive copy is written, which is intentional.
+2. Write an identical-body copy (only the filename differs) to: `/Users/fukuokaya/Library/CloudStorage/GoogleDrive-wfukuokaya@gmail.com/My Drive/project/claude_session/{YYYY-MM-DD}/session_{N}_{slug}.md`
