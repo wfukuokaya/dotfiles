@@ -111,7 +111,7 @@ Border color mapping for this layout:
 - **Editor ↔ bottom/right panel** (if the panel is shown): `panel.border`.
 - **Editor group splits**: `editorGroup.border`.
 
-When asked about vertical borders between editor and terminal, go straight to `sideBar.border`. Current value: `#3a3d4a` (subtle grey against `#1a1c23` background).
+When asked about vertical borders between editor and terminal, go straight to `sideBar.border`. Current value: `#1a1c23` (matches the unified background; borders intentionally hidden for a flat look).
 
 ## Japanese Writing
 
