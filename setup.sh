@@ -56,6 +56,20 @@ elif [ -f "$SRC/.mcp.json.example" ]; then
     echo "Skipped: .mcp.json already exists (see .mcp.json.example for reference)"
 fi
 
+# --- ccstatusline config (status line + custom effort/reset widgets) ---
+CCSL_SRC="$SCRIPT_DIR/ccstatusline"
+CCSL_DST="$HOME/.config/ccstatusline"
+if [ -d "$CCSL_SRC" ]; then
+    mkdir -p "$CCSL_DST"
+    if [ -f "$CCSL_DST/settings.json" ]; then
+        BACKUP="$CCSL_DST/settings.json.bak.$(date +%Y%m%d%H%M%S)"
+        echo "Backup: $CCSL_DST/settings.json -> $BACKUP"
+        cp "$CCSL_DST/settings.json" "$BACKUP"
+    fi
+    cp "$CCSL_SRC/settings.json" "$CCSL_SRC/effort.py" "$CCSL_SRC/reset_time.py" "$CCSL_DST/"
+    echo "Copied: ccstatusline/ (settings.json, effort.py, reset_time.py)"
+fi
+
 # --- Positron settings.json ---
 POSITRON_DST="$HOME/Library/Application Support/Positron/User"
 POSITRON_SRC="$SCRIPT_DIR/positron"
