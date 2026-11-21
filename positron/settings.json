@@ -48,7 +48,8 @@
       "diffEditor.insertedTextBackground": "#3fb95080",
       "diffEditor.removedTextBackground": "#f8514980",
       "diffEditor.insertedLineBackground": "#2ea04314",
-      "diffEditor.removedLineBackground": "#f8514914"
+      "diffEditor.removedLineBackground": "#f8514914",
+      "input.background": "#2E241F"
     }
   },
   "security.workspace.trust.untrustedFiles": "open",
@@ -170,13 +171,12 @@
   "markdown.preview.fontFamily": "'UDEV Gothic 35NFLG'",
   "custom-ui-style.font.monospace": "'UDEV Gothic 35NFLG'",
   "workbench.startupEditor": "none",
-  "chat.editor.fontSize": 14.5,
+  "chat.editor.fontSize": 14,
   "chat.editor.lineHeight": 10,
   "console.fontSize": 15,
   "console.lineHeight": 1.2,
   "markdown.preview.fontSize": 14.5,
   "ai.mcp.enabled": true,
-  "chat.fontSize": 14,
   "github.copilot.chat.claudeOpus5Prompt.enabled": true,
   "github.copilot.chat.claudeOpusDefaultReasoningEffort": "medium",
   "scm.inputFontSize": 15,
@@ -249,5 +249,9 @@
   "quarto.visualEditor.defaultListSpacing": "tight",
   "editor.inlineSuggest.edits.showCollapsed": true,
   "workbench.experimental.modernUI": true,
-  "editor.letterSpacing": -0.4
+  "editor.letterSpacing": -0.4,
+  "packages.warnMissingInEditor": false,
+  "antigravity.enableInlineDiff": false,
+  "diffEditor.useInlineViewWhenSpaceIsLimited": false,
+  "chat.fontSize": 13.5
 }
