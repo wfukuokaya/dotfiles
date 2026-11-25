@@ -1,0 +1,14 @@
+{
+  "name": "Fukuokaya Dark",
+  "base": "dark",
+  "overrides": {
+    "diffRemoved": "rgb(32,12,16)",
+    "diffRemovedWord": "rgb(118,45,57)",
+    "diffRemovedDimmed": "rgb(40,28,32)",
+    "diffAdded": "rgb(10,28,14)",
+    "diffAddedWord": "rgb(40,109,54)",
+    "diffAddedDimmed": "rgb(28,38,30)",
+    "userMessageBackground": "rgb(82,53,44)",
+    "userMessageBackgroundHover": "rgb(101,63,50)"
+  }
+}
